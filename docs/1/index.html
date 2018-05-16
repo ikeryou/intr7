@@ -29,10 +29,23 @@
         justify-content: center;
       }
       .mv > .item {
-        width: 60%;
-        height: 60%;
+        position: relative;
+        width: 30%;
+        border-radius: 50%;
         background-color: #262558;
         -webkit-user-select: none;
+      }
+      .mv > .item:before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+      }
+      .mv > .item > .inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
       }
     </style>
 
@@ -40,7 +53,9 @@
   <body>
 
     <div class="mv">
-      <div href="javascript:void(0)" class="item js-tg"></div>
+      <div class="item js-tg">
+        <div class="inner"></div>
+      </div>
     </div>
 
     <script src="../libs/jquery.min.js"></script>

@@ -32,20 +32,24 @@ function update() {
 
   if(mouse.isDown) {
     // マウス押してるときは、マウスダウン時からのマウス移動量をちゃんと計算
-    // 今回はYのみ
+    dx = mouse.x - mouse.start.x;
     dy = mouse.y - mouse.start.y;
+    mouse.dist.x = dx;
     mouse.dist.y = dy;
   } else {
     // マウス押してないときの移動量は0
+    mouse.dist.x = 0;
     mouse.dist.y = 0;
   }
 
   // 滑らかに移動させるためイージングつける
   var ease = 0.15; // イージング量 小さいとゆっくり
+  param.x += (mouse.dist.x - param.x) * ease;
   param.y += (mouse.dist.y - param.y) * ease;
 
   // ターゲットの移動量を更新
   TweenMax.set(tg, {
+    x:param.x,
     y:param.y
   });
 
