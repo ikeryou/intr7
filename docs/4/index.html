@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+    <title>第７回インタラ会</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body, html {
+        width: 100%;
+        height: 100%;
+        background-color: #f1cdd0;
+      }
+      .mv {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        -webkit-user-select: none;
+      }
+      .item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 10%;
+        height: 3%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+      }
+      .line {
+        position: relative;
+        z-index: 1;
+        width: 1px;
+        height: 80%;
+        background-color: #262558;
+      }
+      .dot {
+        z-index: 0;
+        position: relative;
+        width: 5%;
+        border-radius: 50%;
+        background-color: #262558;
+      }
+      .dot:before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+      }
+      .dot > .inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="mv">
+    </div>
+
+    <script src="../libs/jquery.min.js"></script>
+    <script src="../libs/TweenMax.js"></script>
+    <script src="../libs/isMobile.min.js"></script>
+    <script src="../libs/chroma.min.js"></script>
+    <script src="main.js"></script>
+
+  </body>
+</html>
