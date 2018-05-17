@@ -19,7 +19,16 @@ mouse = {
 init();
 function init() {
 
-  $(window).on('mousemove', _eMouseMove).on('mousedown', _eMouseDown).on('mouseup', _eMouseUp);
+  if(isMobile.any) {
+    document.addEventListener('touchmove', _eMouseMove, {passive:false});
+    document.addEventListener('touchstart', _eMouseDown, {passive:false});
+    document.addEventListener('touchend', _eMouseUp, {passive:false});
+
+  //  $(window).on('touchmove', _eMouseMove).on('touchdown', _eMouseDown).on('touchup', _eMouseUp);
+  } else {
+    $(window).on('mousemove', _eMouseMove).on('mousedown', _eMouseDown).on('mouseup', _eMouseUp);
+  }
+
   update();
 
 }
@@ -62,8 +71,17 @@ function update() {
 // ----------------------------------------
 function _eMouseMove(e) {
 
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
+  if(isMobile.any) {
+    event.preventDefault();
+    touches = event.touches;
+    if(touches != null && touches.length > 0) {
+      mouse.x = touches[0].pageX;
+      mouse.y = touches[0].pageY;
+    }
+  } else {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }
 
 }
 
@@ -75,8 +93,17 @@ function _eMouseDown(e) {
 
   if(!mouse.isDown) {
     mouse.isDown = true;
-    mouse.start.x = e.clientX;
-    mouse.start.y = e.clientY;
+    if(isMobile.any) {
+      event.preventDefault();
+      touches = event.touches;
+      if(touches != null && touches.length > 0) {
+        mouse.start.x = mouse.x = touches[0].pageX;
+        mouse.start.y = mouse.y = touches[0].pageY;
+      }
+    } else {
+      mouse.start.x = e.clientX;
+      mouse.start.y = e.clientY;
+    }
   }
 
 }
