@@ -2,18 +2,18 @@
 
 ### テーマ 「ひっぱる」  
 <br>
-・sample1  
+・sample1<br>  
 https://ikeryou.github.io/intr7/1/  
 <br>
-・sample2  
+・sample2<br>  
 https://ikeryou.github.io/intr7/2/  
 <br>
-・sample3 
+・sample3<br> 
 https://ikeryou.github.io/intr7/3/  
 <br>
-・sample4  
+・sample4<br>  
 https://ikeryou.github.io/intr7/4/  
 <br>
-・sample5  
+・sample5<br>  
 https://ikeryou.github.io/intr7/5/  
 <br>
