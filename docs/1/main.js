@@ -23,8 +23,6 @@ function init() {
     document.addEventListener('touchmove', _eMouseMove, {passive:false});
     document.addEventListener('touchstart', _eMouseDown, {passive:false});
     document.addEventListener('touchend', _eMouseUp, {passive:false});
-
-  //  $(window).on('touchmove', _eMouseMove).on('touchdown', _eMouseDown).on('touchup', _eMouseUp);
   } else {
     $(window).on('mousemove', _eMouseMove).on('mousedown', _eMouseDown).on('mouseup', _eMouseUp);
   }

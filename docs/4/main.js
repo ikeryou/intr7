@@ -33,8 +33,6 @@ Item.prototype.update = function() {
     scaleY:0 + Math.abs(param.y) * 0.05,
     y:param.y,
     rotationZ:radian(param.y * param.x) * -1
-    // letterSpacing:map(d, 0, 2, 0, window.innerWidth * 0.5) + 'em',
-    // backgroundColor:chroma.scale([0x262558, 0x96782c])(map(d, 0, 1, 0, window.innerWidth * 0.25)).css()
   });
 
   TweenMax.set(this.dot, {
@@ -47,12 +45,6 @@ Item.prototype.update = function() {
     x:param.x * this.fric,
     y:param.y * this.fric
   });
-
-  // TweenMax.set(this.dot, {
-  //   y:param.y * 0.8
-  //   // letterSpacing:map(d, 0, 2, 0, window.innerWidth * 0.5) + 'em',
-  //   // backgroundColor:chroma.scale([0x262558, 0x96782c])(map(d, 0, 1, 0, window.innerWidth * 0.25)).css()
-  // });
 
 };
 // -----------------------------------------
@@ -94,7 +86,14 @@ function init() {
 
   window.addEventListener('resize', resize);
 
-  $(window).on('mousemove', _eMouseMove).on('mousedown', _eMouseDown).on('mouseup', _eMouseUp);
+  if(isMobile.any) {
+    document.addEventListener('touchmove', _eMouseMove, {passive:false});
+    document.addEventListener('touchstart', _eMouseDown, {passive:false});
+    document.addEventListener('touchend', _eMouseUp, {passive:false});
+  } else {
+    $(window).on('mousemove', _eMouseMove).on('mousedown', _eMouseDown).on('mouseup', _eMouseUp);
+  }
+
   update();
   resize();
 }
@@ -136,14 +135,6 @@ function update() {
     items[i].update();
   }
 
-  // ターゲットの移動量を更新
-  // 角度や色変えたりの隠し味つける
-  // TweenMax.set(tg, {
-  //   margin:map(d, 0, 0.75, 0, window.innerWidth * 0.5) + 'em',
-  //   letterSpacing:map(d, 0, 2, 0, window.innerWidth * 0.5) + 'em',
-  //   backgroundColor:chroma.scale([0x262558, 0x96782c])(map(d, 0, 1, 0, window.innerWidth * 0.25)).css()
-  // });
-
   window.requestAnimationFrame(update);
 }
 
@@ -169,8 +160,17 @@ function resize() {
 // ----------------------------------------
 function _eMouseMove(e) {
 
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
+  if(isMobile.any) {
+    event.preventDefault();
+    touches = event.touches;
+    if(touches != null && touches.length > 0) {
+      mouse.x = touches[0].pageX;
+      mouse.y = touches[0].pageY;
+    }
+  } else {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }
 
 }
 
@@ -182,8 +182,17 @@ function _eMouseDown(e) {
 
   if(!mouse.isDown) {
     mouse.isDown = true;
-    mouse.start.x = e.clientX;
-    mouse.start.y = e.clientY;
+    if(isMobile.any) {
+      event.preventDefault();
+      touches = event.touches;
+      if(touches != null && touches.length > 0) {
+        mouse.start.x = mouse.x = touches[0].pageX;
+        mouse.start.y = mouse.y = touches[0].pageY;
+      }
+    } else {
+      mouse.start.x = e.clientX;
+      mouse.start.y = e.clientY;
+    }
   }
 
 }

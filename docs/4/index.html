@@ -10,6 +10,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
       }
       body, html {
         width: 100%;
@@ -63,6 +64,21 @@
         bottom: 0;
         right: 0;
       }
+      .text {
+        position: absolute;
+        left: 0;
+        bottom: 1.5vw;
+        font-size: 1.5vw;
+        font-weight: bold;
+        font-style: italic;
+        text-align: center;
+        width: 100%;
+      }
+      @media screen and (max-width:750px) {
+        .text {
+          font-size: 5vw;
+        }
+      }
     </style>
 
   </head>
@@ -70,6 +86,8 @@
 
     <div class="mv">
     </div>
+
+    <p class="text">DRAG</p>
 
     <script src="../libs/jquery.min.js"></script>
     <script src="../libs/TweenMax.js"></script>
