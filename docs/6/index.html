@@ -30,38 +30,53 @@
         position: absolute;
         top: 0;
         left: 0;
-        transform-origin: 50% 0%;
       }
       .line {
         position: relative;
         z-index: 1;
         width: 1px;
-        /* height: 80%; */
         background-color: #fff;
       }
 
-      .text {
-        position: absolute;
-        left: 0;
-        bottom: 1.5vw;
-        font-size: 1.5vw;
-        font-weight: bold;
-        font-style: italic;
-        text-align: center;
+      .sun {
+        -webkit-user-select: none;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         width: 100%;
+        height: 100%;
       }
-      @media screen and (max-width:750px) {
-        .text {
-          font-size: 5vw;
-        }
+      .sun_item {
+        position: relative;
+        width: 30%;
+        border-radius: 50%;
+        background-color: #e2c66f;
       }
+      .sun_item:before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+      }
+      .sun_item > .inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+
     </style>
 
   </head>
   <body>
-
+    <!-- <div class="sun">
+      <div class="sun_item"><div class="inner"></div></div>
+    </div> -->
     <div class="mv">
     </div>
+
 
     <!-- <p class="text">DRAG</p> -->
 

@@ -17,6 +17,11 @@ Item = function(el) {
   this.fric2 = 1;
   this.offset = 0;
 
+  this.sun = {
+    angle:random(0, 360),
+    speed:0
+  };
+
 };
 
 // 初期化
@@ -29,13 +34,29 @@ Item.prototype.init = function() {
 // 更新
 Item.prototype.update = function() {
 
-  var rot = Math.atan2(param.y, param.x)
+  var rot = Math.atan2(param.y, param.x);
+  // var rate = map(param.d, 0, 1, 0, Math.min(window.innerWidth, window.innerHeight) * 0.08);
+  var rate = map(param.d, 0, 1, 0, Math.min(window.innerWidth, window.innerHeight) * 0.08);
+
+  var colorA = chroma.scale([0xf8fae4, 0xdfc16b])(rate).alpha(rate).css();
+  var colorB = chroma.scale([0xf8fae4, 0xdfc36c])(rate).alpha(1).css();
+
   TweenMax.set(this.line, {
     width:1,
-    height:this.height,
-    backgroundColor:chroma.scale([0xffffff, 0x80ddf6])(map(param.d, 0, 1, 0, window.innerWidth * 0.05)).css()
+    height:this.height
+    // backgroundColor:chroma.scale([0xffffff, 0x80ddf6])(map(param.d, 0, 1, 0, window.innerWidth * 0.05)).css()
+    // background:'linear-gradient(' + colorA + ', ' + colorB + ')'
+    // opacity:1 - rate
     // rotationZ:radian(param.x * param.y) * -1
+    // css:{
+    //   background:'linear-gradient(' + colorA + ', ' + colorB + ')'
+    // }
   });
+
+  this.line.css({
+    background:'linear-gradient(' + colorA + ', ' + colorB + ')'
+  })
+
   //
   // TweenMax.set(this.dot, {
   //   x:param.y * this.fric * -1,
@@ -57,17 +78,37 @@ Item.prototype.update = function() {
 
   // this.fric = map(param.d, 1, 0.1, 0, 100)
 
+  var xA = this.x;
+  var yA = this.y;
+  var rotA = 0;
+
+  var rad = radian(this.sun.angle);
+  var radius = Math.min(window.innerWidth, window.innerHeight) * 0.4 * this.sun.fric;
+  var xB = window.innerWidth * 0.5 + Math.sin(rad) * radius;
+  var yB = window.innerHeight * 0.5 + Math.cos(rad) * radius - this.height * 0.5;
+  this.sun.angle += this.sun.speed;
+
+
+
+  var x = xA * (1 - rate) + xB * rate;
+  var y = yA * (1 - rate) + yB * rate;
+
+  var dx = window.innerWidth * 0.5 - x;
+  var dy = window.innerHeight * 0.5 - y;
+  var rotB = degree(rad * -1) + 90;
+  var rot = rotA * (1 - rate) + rotB * rate;
 
   TweenMax.set(this.el, {
-    x:this.x,
-    y:this.y +  this.offset
+    x:x,
+    y:y,
+    rotationZ:rot
     // scaleY:map(param.d, 1, 2, 0, Math.max(window.innerWidth, window.innerHeight) * 0.1)
   });
 
 
 
   this.y += this.speed * this.fric;
-  if(this.y > window.innerHeight) {
+  if(!mouse.isDown && this.y > window.innerHeight) {
     this._reset();
   }
 
@@ -80,6 +121,12 @@ Item.prototype._reset = function() {
   this.speed = random(5, 10) * 3;
   this.height = random(20, 100) * 1;
   this.firc2 = random(0.5, 2.2);
+
+  this.sun.fric = random(0.9, 1);
+  this.sun.speed = random(1, 2) * 0.8;
+  if(random(0,2) <= 1) {
+    this.sun.speed *= -1;
+  }
 
 };
 // -----------------------------------------
@@ -166,9 +213,21 @@ function update() {
     param.d += (0 - param.d) * 0.1;
   }
 
+  var rate = map(param.d, 0, 1, 0, Math.min(window.innerWidth, window.innerHeight) * 0.1);
+  var colorA = chroma.mix('#5e5e5c', '#0091ef', rate).css();
+  var colorB = chroma.mix('#1b192e', '#4eaeeb', rate).css();
   $('body').css({
-    backgroundColor:chroma.scale([0x000000, 0x80ddf6])(map(param.d, 0, 1, 0, window.innerWidth * 0.05)).css()
+    // backgroundColor:chroma.scale([0x000000, 0x80ddf6])(map(param.d, 0, 1, 0, window.innerWidth * 0.05)).css()
+    background:'linear-gradient(' + colorA + ', ' + colorB + ')'
   });
+
+  // var colorC = chroma.mix('#5e5e5c', '#e3c46e', rate).css();
+  // var colorD = chroma.mix('#1b192e', '#e3c46e', rate).css();
+  // TweenMax.set($('.sun_item'), {
+  //   // background:'radial-gradient(' + colorC + ', ' + colorD + ')',
+  //   opacity:rate,
+  //   scale:map(rate, 0.8, 1, 0, 1)
+  // });
 
   var len = items.length;
   for(var i = 0; i < len; i++) {
